@@ -1,0 +1,42 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="general_body_container">
+    <div  id="heading_wrap" data-action = '{{action}}'>
+        <div class="col-2 invisible" id="first"></div>
+        <div  id="second">
+ 
+            <h3 class = 'width_100 adjust'>Order №{{order_id}}&nbsp;&nbsp; &nbsp;&nbsp; {{parameters.4}}&nbsp;$</h3>
+            <h5 class = 'width_100 adjust'>Created {{parameters.0}} by&nbsp;{{parameters.5}} </h5>
+            <i class = 'width_100 adjust'>Exposition: {{parameters.1}} - {{parameters.2}} </i>          
+            <i class = 'width_100 adjust'> Status: {{parameters.3}}</i> 
+        </div>
+        <div class="col-2 invisible adjust" id="third">
+            <form action = '{% url "cancel_order" %}' method ='post'>
+                {% csrf_token%}
+                <input type = 'hidden' name = 'order_id'  value = '{{order_id}}'>
+                <button type = 'submit' class="btn btn-secondary" id = 'cancel_order_btn'>Confirm Order Cancelation</button>
+            </form>
+        </div>
+    </div>  
+    <hr>
+
+    {% for stop in stops %}
+        <div class ='row'>
+            <div class = 'col-9'>
+                <h5>{{stop.0|safe}}</h5>
+            </div>
+            <div class = 'col-3 adjust'>
+                <h5>{{stop.1}}&nbsp;$ </h5>
+            </div>
+        </div>
+    {% empty %}
+        <br><br><h5 class = 'width_100 adjust'> No bus-stops </h5>
+    {% endfor %}
+</div> 
+
+<script src="{% static 'ad_bus_stops/order_page.js' %}"></script>
+
+{% endblock %}

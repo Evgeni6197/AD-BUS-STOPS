@@ -1,0 +1,31 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container">
+    <h2 id="heading" data-time_left="{{time_left}}">Confirmation</h2>
+    <h5>Enter the code sent to your email</h5>
+
+    {% if message %}
+        <div class = 'warning_message'>{{ message }}</div><br>
+    {% endif %}
+
+    <form action="{% url 'confirmation'  user_id   %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" autofocus type="text" name="code" placeholder="Authentication code" required maxlength="6">
+            <br>    
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form><br>
+
+    <h3 id="timer_container" class  = 'adjust width_100'></h3>
+
+    <div id="link_container" class = 'transparent'>
+        <a id ='link' href = '{% url "register"  %}'></a>
+    </div>
+</div> 
+<script src="{% static 'ad_bus_stops/confirmation.js' %}"></script>
+
+{% endblock %}

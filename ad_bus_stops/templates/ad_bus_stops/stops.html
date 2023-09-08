@@ -1,0 +1,270 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container "  style = "width: 99%; ">
+    <div class = 'general_stops_container ' id = 'general_stops_container'
+        data-stops_id_paginated = '{{stops_id_paginated}}'
+        data-quantity_in_cart = '{{quantity_in_cart}}' >
+        
+        <div id = 'stops_page_message_container' class = 'invisible stops_page_message_container set_border  bg_war'>
+            <div class = 'width_100 right'>
+                <button type="button" class="close" aria-label="Close" id = 'close_icon3'>
+                    <span aria-hidden="true">&times;</span>
+                </button> 
+            </div>
+            <h5  id = 'overlap_text' class = 'invisible width_100 horizontally_centered '> Your cart's timeframe  overlaps with months already booked for this address.
+                 Once you proceed to payment for your current order you'll have the option to choose 
+                 from available time slots and reserve this bus stop in a future order.
+            </h5>
+            <h5 id = 'reload_text' class = 'invisible width_100 horizontally_centered ' >
+                Server Error. Please reload the page.
+            </h5>
+            <h5 id = 'try_again_text'  class = 'invisible width_100 horizontally_centered '>
+                Booking Unsuccessful: Please Retry.
+            </h5>
+
+            <div id ='spinner_container' class = 'invisible  adjust width_100'>
+                <br><br>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                    <span class="sr-only"></span>
+                    </div>
+                </div>
+                <br><br><br>
+            </div> 
+    
+        </div>
+
+        <div class = 'row flex_0 top_stops_container '  id='top_stops_container'>
+
+            <div class = 'col-7 ' id="search_container"  >
+                <form class="form-inline my-2 my-lg-0 "  action = '{% url "bus_stops" city 1 "_"  %}' method ='post'>
+                    {% csrf_token %}
+                    <div class="input-group " >                       
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search street" name = 'letters' required  maxlength="15">
+                        <button class="btn  btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class ='nav col-5  right_flex ' id="cart_container" >
+                <div class = 'nav-link ' style="padding-bottom: 0px; padding-top: 0px;">
+                    <ul class="pagination  {{pagin_appearance}}">
+                        {% if prev_page > 0 %}
+                            <li class="page-item  ">
+                                <a class="page-link  active_link" href="{% url 'bus_stops' city prev_page  letters %}"> &laquo; </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item  " >
+                                <a class="page-link disabled" >  &laquo; </a>
+                            </li>
+                        {% endif %}
+
+                        {% if next_page <= num_pages  %}
+                            <li class="page-item">
+                                <a class="page-link active_link" href="{% url 'bus_stops' city next_page letters %}"> &raquo;</a>
+                            </li>
+                        {% else %} 
+                            <li class="page-item ">
+                                <a class="page-link disabled" >&raquo;</a>
+                            </li>                
+                        {% endif %}    
+                    </ul>
+                </div>
+                <div class = 'nav-link ' style = 'padding: 0px;'>
+                    <button  id = 'cart_button'  data-order_id = '{{order_id}}' type="button" class="btn btn-outline-primary"  >
+                        {% if quantity_in_cart > 0 %}
+                            Cart&nbsp;({{quantity_in_cart}})  
+                        {% else %}                        
+                            &nbsp;Cart&nbsp; 
+                        {% endif %}               
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        {% if device == 'desktop' %}
+            <div class = 'row flex_0'>
+                <div class='col-6 vertically_centered ' style = 'padding-left: 50px;' > <h3> {{city}} </h3></div>
+                <div class='col-1 adjust'> $/ month </div>
+                {% if user.is_authenticated %} 
+                    <div class='col-3 adjust'> vacant from </div>
+                    <div class='col-2'>  </div>
+                {% else %}
+                    <div class='col-5 adjust'> vacant from </div>
+                {% endif %}
+            </div>
+            <hr>
+        {% endif %}
+        
+        <div class ='overflow' style = 'flex: 1 1 auto; ' >
+            <div id="content_itself">
+                {% for stop in stops %} 
+                    <div class = 'row set_border stop_container align-items-center ' >
+                        <div class = 'col-6 '>
+                            <h5>
+                                {% if device == 'mobile' %}
+                                    <span class='nowrap'>{{stop.5}}.&nbsp;{{city}}, </span>
+                                {% else %}                            
+                                    {{stop.5}}.&nbsp;                            
+                                {% endif %} 
+                                {{stop.0.street}}&nbsp;{{stop.0.house}}
+                            </h5>
+                        </div>
+                        <div class = 'col-1 adjust  price_container'>
+                            <h5 class="nowrap "> 
+                                <span class='index_letters '  id = 'priceSpan_{{stop.0.id}}'>
+                                    {{stop.0.price}}
+                                </span>
+                                {% if device == 'mobile' %} 
+                                    <span class='index_letters'>$</span>
+                                {% endif %}  
+                            </h5>
+                        </div>
+                        {% if user.is_authenticated %}    
+                            <div class = 'col-3 adjust date_container' id ='date_container_{{stop.0.id}}'>                    
+                                {% if device == 'mobile' %}
+                                    {%  if not stop.2 %} 
+                                        {% if stop.1 %}
+                                           <span  id = 'vacant_from_prompt_{{stop.0.id}}'>vacant from  </span> 
+                                        {% endif %} 
+                                    {% endif %}   
+                                 {% endif %}
+                                 <span id = 'vacant_from_{{stop.0.id}}'>  {{stop.1}} </span>
+                            </div>
+                            <div class = 'col-2 right_flex  book_btn_container'>   
+                                {%  if not stop.2 %} 
+                                    {% if stop.4 %}
+                                        <button data-vacant_months = '{{stop.3}}'
+                                                data-stop_id = '{{stop.0.id}}'
+                                                data-street = '{{stop.0.street}}'
+                                                data-house = '{{stop.0.house}}'
+                                                data-price = '{{stop.0.price}}'
+                                                type = "button" 
+                                                class = "btn btn-outline-primary book_button"
+                                                id = 'btn_{{stop.0.id}}'>
+                                                    &nbsp;Book&nbsp; 
+                                        </button>
+                                    {% else %}
+                                    <button type="button" class="btn btn-info info_button" >
+                                        &nbsp;&nbsp;Info&nbsp;&nbsp;&nbsp;
+                                    </button>
+                                    {% endif %}
+                                {% else %}
+                                    <button type="button" class="btn btn-secondary nowrap " >
+                                        in Cart
+                                    </button>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class = 'col-5 adjust date_container'>                    
+                                {% if device == 'mobile' %} vacant from {% endif %}
+                                <span id = 'vacant_from_{{stop.0.id}}'>  {{stop.1}} </span>
+                            </div>
+                        {% endif%}
+                    </div>
+                {% empty %}
+                    <div class = 'width_100  adjust'>
+                        <br><br><br><h5>
+                        No actual bus stops 
+                        {% if device == 'mobile' %} 
+                            in {{city}}
+                        {% endif %}</h5>
+                    </div>
+                {% endfor %}
+                {% if device == 'desktop' %} <hr> {% endif %}
+            </div>       
+        </div>        
+    </div>
+
+    <div  id="general_booking_container" class=" invisible">
+        <div class = 'row'>
+            <div class = 'col'>
+                <h3>Booking </h3>
+
+                <div id ='spinner' class = 'invisible adjust width_100'>  
+                    <br>  <br><br>                      
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                          <span class="sr-only"></span>
+                        </div>
+                    </div>
+                    <br><br> <br> 
+                </div> 
+
+                <h5 class = 'warning_message invisible' id ='book_warning_message'>
+                    App Explorer account  is required. Click on the logo to register.
+                </h5>
+
+                <div id = 'book_warning_message_1' class ='set_border invisible '
+                        style ='margin: 10px; padding: 10px;' >
+                    <div class = 'width_100 right'>
+                        <button type="button" class="close" aria-label="Close" id = 'close_icon1'>
+                            <span aria-hidden="true">&times;</span>
+                        </button> 
+                    </div>
+                    <h5 class = 'warning_message ' >
+                        Please select a period for booking.
+                    </h5>
+                </div>
+
+
+                <div id = 'book_warning_message_2' class ='set_border invisible '
+                        style ='margin: 10px; padding: 10px;' >
+                    <div class = 'width_100 right'>
+                        <button type="button" class="close" aria-label="Close" id = 'close_icon2'>
+                            <span aria-hidden="true">&times;</span>
+                        </button> 
+                    </div>
+                    <h5 class = 'warning_message ' >
+                        Please select a period with consecutive months.
+                    </h5>
+                </div>
+                <ul id = 'booking_address_ul'><h5>
+                    <li>Address: {{city}},
+                        <span id="book_address" ></span>
+                    </li>
+                    <li><div style="display: inline;">
+                        Price for month: <span id="book_price" ></span>&nbsp;$ &nbsp; &nbsp;
+                        <a href = "{% url 'guidance' %}"><i>Discount&nbsp;info</i></a></div>
+                    </li>
+                </h5></ul>
+
+                <div class = 'nav'>
+                    <div class = 'nav-link ' >
+                        <button  id = 'submit_button'  type="button" class="btn btn-outline-primary invisible" >
+                            Submit
+                        </button>
+                    </div>
+                    <div class = 'nav-link ' >
+                        <button  id = 'return_button'  type="button" class="btn btn-outline-primary" >
+                            &nbsp;&nbsp;Back&nbsp;&nbsp;
+                        </button>
+                    </div>
+                </div>
+            </div> 
+            <div class = 'col'>
+                <div class = 'overflow'  id = 'checkbox_wrapping_container' style = 'margin-top: 10px;'>
+                    <div class ='row' style = "width: 95%; " id = "slots_container">
+                        <div  class = 'col  ' id="checkbox_container1" >
+                            <!-- Dynamic checkboxes will be inserted here -->
+                        </div>
+                        <div  class = 'col ' id="checkbox_container2" >                            
+                            <!-- Dynamic checkboxes will be inserted here --> 
+                        </div>  
+                    </div>  
+                </div>
+            </div>
+        </div>       
+    </div>
+    <div  id="general_cart_container" class=" invisible">
+        <a href = '{% url  "cart"  city  num_page letters %}' id = 'cart_link'></a>
+    </div>
+
+</div>
+<script src="{% static 'ad_bus_stops/stops.js' %}"></script>  
+<script src="{% static 'ad_bus_stops/booking.js' %}"></script> 
+
+{% endblock %}

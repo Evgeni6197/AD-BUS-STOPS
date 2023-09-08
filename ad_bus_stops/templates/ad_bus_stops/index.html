@@ -1,0 +1,80 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %} 
+<style> 
+    .bg_wide{ background-image: url("{% static 'ad_bus_stops/images/front_wide_semi1.jpg'%}");}
+    .bg_narrow{ background-image: url("{% static 'ad_bus_stops/images/front_narrow_semi1.jpg'%}");}  
+</style>
+<div style="padding-left: 10px; position:relative;" id ='wrapping_index' class ='transparent'>
+    <div class="general_body_container overflow_h bg_image_container " 
+         id = 'general_index_container'></div> 
+
+    <div class = 'index_text_container  row'  id = 'index_text_container' 
+         data-count="{{count}}"  data-device = "{{device}}">
+        <div class=" col-1" id = 'first_col'></div>
+        <div class=" col-4  overflow  index_col"  id = 'second_col' >
+            <br>
+            <div class="dropdown show" id="general_link">
+                <a class="btn btn-outline-dark dropdown-toggle  width_100 " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <h3>City</h3>
+                </a>              
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    {% for city in cities %}
+                        <a class="dropdown-item " href="{% url 'bus_stops' city 1  '_' %}"><h5>{{city}}</h5></a>
+                    {% endfor %}                
+                </div>
+            </div>
+            <div id ='general_spinner' class = 'transparent  adjust width_100'>
+                <br><br>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only"></span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-2" id="third_col"></div>
+        <div class="col-5  overflow index_col"  id="fourth_col"  > <br>
+
+            {% for text_part in text_list %}
+                {% for item in text_part %}
+                    <span  class = 'index_words' >
+                        {% for letter in item%}
+                            <span class = 'index_letters transparent'  id="{{letter.0}}">{{letter.1}}</span>
+                        {% endfor %}
+                    </span>
+                {% endfor %}<br>
+            {% endfor %}
+
+            {% if device == 'mobile' %}
+                       
+                <div class="dropdown show invisible"  id="mob_narr_link">
+                    <div id ='mob_narr_spinner' class = 'transparent adjust width_100'>                        
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                              <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </div>                    
+                    <br>
+                    <a class="btn btn-outline-dark dropdown-toggle  width_80" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <h3>City</h3>
+                    </a>              
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">  
+                        {% for city in cities %}
+                            <a class="dropdown-item " href="{% url 'bus_stops'  city 1  '_' %}"><h5>{{city}}</h5></a>
+                        {% endfor %}            
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+<script src="{% static 'ad_bus_stops/index.js' %}"></script> 
+    
+{% endblock %}
+

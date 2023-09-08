@@ -1,0 +1,132 @@
+.adjust{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; 
+}
+.bg_image_container{
+  background-size: cover;
+  background-position: center center;
+  opacity: 50%;
+}
+.bg_nav_blue{
+  background-color: rgba(227, 239, 236, 0.89);
+}
+.bg_nav_green{
+  background-color: rgba(118, 237, 134, 0.89);
+}
+
+.body{
+  margin-top: 2px;
+  flex-grow: 1; 
+}
+.general_body_container{
+  padding-top: 5px;
+  padding-left: 10px;
+}
+.general_index_container{
+  padding-top: 5px;
+  padding-left: 10px;
+}
+.guidance_link{
+  background-color: rgb(130, 194, 210);
+}
+.hello_container_landscape{  
+  text-align: center; 
+  margin-right: 10px; 
+}
+.hello_container_portrait{
+  width: 100%;  
+  display: flex;
+  justify-content: right;
+  text-align: right;
+}
+.horizontally_centered {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo_desktop, .logo_mobile_portrait{
+  max-width:100%;
+  max-height: 100px;
+}
+
+.logo_mobile_landscape{
+  max-width:100%;
+  max-height: 50px;
+}
+.layout_body{
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+  width: 99vw;
+}
+.index_col{
+  height: 100%; 
+  text-align: center;
+}
+
+.index_text_container{
+  position:absolute;
+  left: 1%;
+  top:1%;
+  width: 99%; 
+  z-index: 1;
+  color:rgba(7, 8, 7, 0.922);
+  font-weight: bold;
+  font-size: 30px;
+}
+.index_letters{
+  margin-right: -0.25em;
+}
+.index_words{
+  white-space: nowrap; 
+  margin-right: 0.25em; 
+}
+.invisible {
+    display: none;
+}
+.overflow{
+  overflow: auto; 
+}
+.overflow_h{
+  overflow: hidden; 
+}
+.right{
+  text-align: right;
+}
+.set_border{
+    border:solid;
+    border-width: thin;
+    border-radius: 5px;
+  }
+.study_message_container{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 10px;
+  width: 99vw;
+}
+.transparent{
+  opacity: 0;
+}
+.vertically_centered {
+    display: flex;
+    align-items: center;
+}
+.warning_message{
+  color: red;
+}
+.width_100{
+  width: 100%;
+}
+.width_80{
+  width: 80%;
+}
+
+
+
+
+

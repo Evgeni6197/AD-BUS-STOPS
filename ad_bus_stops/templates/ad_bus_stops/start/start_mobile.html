@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html  lang = 'en'> 
+    <head>
+        <title>AD-BUS-STOPS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'ad_bus_stops/css/start_mobile.css' %}" rel="stylesheet">    
+    </head>
+    <body>          
+        <div id="viewport1" data-device="{{data_device}}">
+            <div  class ='{{insertion1}} set_border' id="general_container_mobile">               
+                <div   id = 'wrapping_container' class = '{{insertion2}} wrapping_initial overflow'>                    
+                    <div class=" start_container transparent " id="pic_container1">
+                        {% load static %} 
+                        <img src="{% static 'ad_bus_stops/images/1.JPG'  %} "   width="100%"  class ='img set_border'>
+                    </div>
+                    
+                    {% for i in container_numbers_additional %}
+                    <div class=" start_container  invisible " id="pic_container{{i.0}}">
+                        {% load static %} 
+                        <img src="{% static i.1 %}"   width="100%"  class ='img set_border'>
+                    </div>
+                    {% endfor %}                     
+                </div>
+
+                <div   id = 'message_container' class = '{{insertion3}} message_container  transparent '>
+                    <div   id="logo_container" class ='logo_container adjust '>
+                        {% load static %} 
+                        <img src="{% static 'ad_bus_stops/images/logo3.gif'%}" id = 'logo' class = 'logo'> 
+                    </div>
+                    <div id="button_container" class = ' adjust '>
+                        <a href = '{% url   "app_explorer"  %}' id="to_app_explorer"></a>
+                        <button id = 'button'> Skip </button> 
+                    </div>                               
+                </div>
+                <div id = 'text_container' class = 'absolute adjust text transparent'>
+                    Advertise on bus stops? Step right in for an interactive tour of your new web tool!  
+                </div>
+            </div>
+        </div>
+        <a id="resize"></a>
+        <script src="{% static 'ad_bus_stops/js_start/start_mobile.js' %}"></script>  
+    </body>
+</html>

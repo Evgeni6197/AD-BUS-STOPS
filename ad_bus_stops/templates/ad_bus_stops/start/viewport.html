@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+    <html lang = 'en'>
+        <head>
+
+        </head>
+        <body style = 'opacity:0'>
+            
+            <form action = '{% url "start" %}' id ='form' method = 'post'>
+
+                {% csrf_token %}
+                <input type = 'text' name = 'width' id="width">
+                <input type = 'text' name = 'height' id = 'height'>
+                <input type = 'submit'>
+
+            </form>
+
+
+            <script>               
+
+                document.getElementById('width').value = window.innerWidth;
+                document.getElementById('height').value = window.innerHeight;
+                
+                const form = document.getElementById('form');
+                form.addEventListener('submit',()=>{
+                    event.preventDefault();
+                })
+
+                form.submit();
+            </script>
+        
+        </body>
+    </html> 

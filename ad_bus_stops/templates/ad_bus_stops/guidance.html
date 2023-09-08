@@ -1,0 +1,42 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container"> 
+
+    <h3><strong>Advertisement Placement at Bus Stops</strong></h3>
+    <h5><p>We offer advertising space at bus stops for your promotional needs. 
+        The placement duration is in multiples of one month, starting on the first day 
+        of the month and ending on the last day. To book an advertisement slot, 
+        you need to have at least <strong>{{minimum_time_till_pub}} days</strong> before the start of the placement.</p>
+    
+    <strong>Booking and Payment</strong>
+    <ul>
+        <li>After registration, you can select the desired bus stop addresses for advertising.</li>
+        <li>Upon placing an order, you will receive an email with our details for offline payment.</li>
+        <li>You have <strong>{{payment_waiting}} days</strong> to complete the payment after booking the first advertisement space.</li>
+        <li>Once the payment is made, you will receive a payment confirmation via email.</li>
+        <li>Failure to make the payment within <strong>{{payment_waiting}} days</strong> will result in the cancellation of your order.</li>
+    </ul>
+    
+    <strong>Production and Placement</strong>
+    <ul>
+        <li>After successful payment, we require <strong>{{preparation}}days</strong> for the production of printed materials for direct placement.</li>
+        <li>Once your printed advertisement is placed, you will be notified via email.</li>
+        <li>We will also notify you when the advertisement's exposure period has expired.</li>
+    </ul>
+
+    <strong>Accommodation Discounts</strong>
+    <p>Book your advertisement space for an extended period to avail discounts:</p>
+    <ul>
+        <li>{{duration1}} months: <strong>{{discount1}}% discount</strong></li>
+        <li>{{duration2}} months: <strong>{{discount2}}% discount</strong></li>
+        <li>{{duration3}} months: <strong>{{discount3}}% discount</strong></li>
+    </ul>
+
+    <strong>Personal Account</strong>
+    <p>In your personal account, you will find information about all your orders. </p></h5>
+</div>  
+    
+{% endblock %}
+

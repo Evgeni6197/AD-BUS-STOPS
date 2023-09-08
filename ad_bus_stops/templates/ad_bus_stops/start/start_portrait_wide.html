@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html  lang = 'en'>
+    <head>
+        <title>AD-BUS-STOPS</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'ad_bus_stops/css/start.css' %}" rel="stylesheet">
+    
+    </head>
+    <body> 
+        <div id="viewport">
+            <div  class =' general_container set_border' id="general_container">
+                <div class ='row  align-items-center  justify-content-center  two_photo_container' >
+                    {% for i in container_numbers_initial %}
+                        <div class="col start_container transparent " id="pic_container{{i.0}}">
+                            {% load static %} 
+                            <img src="{% static i.1  %}"   width="100%" class ="img">
+                        </div>
+                    {% endfor %}                    
+                </div>
+
+                {% for i in container_numbers_additional %}
+                    <div class=" start_container transparent invisible" id="pic_container{{i.0}}">
+                        {% load static %} 
+                        <img src="{% static i.1  %}"   width="100%" class ="img">
+                    </div>
+                {% endfor %}
+
+                <div  id = 'message_container'  class = 'message_container adjust width_100 transparent'>
+
+                    <div class ='row height_100  width_100' id ='inside_message'>
+                        <div class =' col-8 adjust height_100'  id ='logo_container' >
+                            {% load static %} 
+                            <img src="{% static 'ad_bus_stops/images/logo3.gif'%}" id = 'logo1'> 
+                        </div>
+                        <div id="button_container" class =' col-4  adjust height_100'  >                       
+                            <a href = '{% url   "app_explorer"  %}' id="to_app_explorer"> </a> 
+                            <button id = 'button'> Skip </button>                             
+                        </div>  
+                    </div>                   
+                </div>
+                <div id = 'text_container' class = 'absolute adjust text transparent'>
+                    Advertise on bus stops? Step right in for an interactive tour of your new web tool!  
+                </div>
+
+            </div>
+        </div> 
+        <a id="resize"></a>
+        <script src="{% static 'ad_bus_stops/js_start/start_portrait_wide.js' %}"></script>
+    </body> 
+</html>

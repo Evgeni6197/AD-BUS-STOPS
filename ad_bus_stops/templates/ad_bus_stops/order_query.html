@@ -1,0 +1,115 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container">
+    <form action = '{% url  "order_query" %}' method = 'post'>
+        {% csrf_token %}
+        <div class = 'row'>
+            <div class ='col-2 '></div>        
+            <div class ='col-8 adjust'>
+                <h3> Choose order parameters</h3>
+            </div>
+            <div class ='col-2 adjust'>
+                <button type = 'submit' class="btn btn-outline-primary">Show Selection</button>
+            </div>
+        </div> <hr>
+        <div class = 'row'>
+            <div class ='col-3 adjust_right'>
+                <h5> Select customer</h5>
+            </div>
+            <div class ='col-3 adjust_left'>
+                <div class="form-group" >                   
+                    <select  class=" form-control " name = 'customer_name' style ="min-width:100px">
+                        {% for user in users %}                      
+                            <option>{{user}}</option>
+                        {% empty %}
+                            <option>No customers</option>
+                        {% endfor %}    
+                    </select>
+                </div>                
+            </div>
+            <div class ='col-3 adjust_right'>
+                <h5> Select status</h5> 
+            </div>
+            <div class ='col-3 adjust_left'>
+                <div class="form-group" >                   
+                    <select  class=" form-control "  name = 'status'>
+                        {% for status in statuses %}                      
+                            <option>{{status}}</option>
+                        {% endfor %}    
+                    </select>
+                </div>  
+            </div>
+        </div> <hr>
+
+        <div class ='row'>
+            <div class ='col-3 adjust'>
+                <h5> Creation date  </h5>
+            </div>
+            <div class ='col-1 adjust_right'>
+                <strong><i> from </i></strong>
+            </div>
+            <div class ='col-3 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="date" name="date_created_from">
+                </div>
+            </div>
+            <div class ='col-1 adjust_right'>
+                <strong><i> to </i></strong>
+            </div>
+            <div class ='col-4 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="date" name="date_created_to">
+                </div>
+            </div>
+        </div> <hr>
+        
+        <div class ='row'>
+            <div class ='col-3 adjust'>
+                <h5> Exposition start date  </h5>
+            </div>
+            <div class ='col-1 adjust_right'>
+                <strong><i> from </i></strong>
+            </div>
+            <div class ='col-3 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="date" name="exposition_start_from">
+                </div>
+            </div>
+            <div class ='col-1 adjust_right'>
+                <strong><i> to </i></strong>
+            </div>
+            <div class ='col-4 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="date" name="exposition_start_to">
+                </div>
+            </div>
+        </div> <hr>
+
+        <div class ='row'>
+            <div class ='col-3 adjust'>
+                <h5> Exposition end date  </h5>
+            </div>
+            <div class ='col-1 adjust_right'>
+                <strong><i> from </i></strong>
+            </div>
+            <div class ='col-3 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="date" name="exposition_end_from">
+                </div>
+            </div>
+            <div class ='col-1 adjust_right'>
+                <strong><i> to </i></strong>
+            </div>
+            <div class ='col-4 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="date" name="exposition_end_to">
+                </div>
+            </div>
+        </div> 
+
+    </form>
+</div>      
+
+{% endblock %}

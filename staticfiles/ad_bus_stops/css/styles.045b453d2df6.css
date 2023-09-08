@@ -1,0 +1,52 @@
+.adjust{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; 
+}
+.hello_container_landscape{
+  width: 40%; 
+  text-align: left; 
+  margin-right: 10px;
+  
+}
+.hello_container_portrait{
+  width: 100%;  
+  display: flex;
+  justify-content: right;
+  text-align: right;
+}
+
+.logo_desktop, .logo_mobile_portrait{
+  max-width:100%;
+  max-height: 100px;
+}
+
+.logo_mobile_landscape{
+  max-width:100%;
+  max-height: 50px;
+}
+
+.invisible {
+    display: none;
+  }
+
+.overflow{
+  overflow: hidden;
+  overflow-wrap: break-word;
+}
+
+.set_border{
+    border:solid;
+    border-width: thin;
+    border-radius: 5px;
+  }
+
+.vertically_centered {
+    display: flex;
+    align-items: center;
+}
+
+.bg_nav{
+    background-color: rgba(227, 239, 236, 0.89);
+}

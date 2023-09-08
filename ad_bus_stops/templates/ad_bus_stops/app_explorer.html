@@ -1,0 +1,111 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+  
+
+
+<div id="accordion" class = 'general_body_container'>
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <h4>Introduction</h4> 
+                </button>
+            </h5>
+        </div>
+    
+        <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <h5>  Welcome to our &nbsp;&nbsp;
+                    <strong><i>advertising agency's working tool</i></strong>
+                    &nbsp;&nbsp; for selling ad space at bus stops! </h5>
+                    <h5>If you're part of an agency in need of such a powerful tool - this offer is tailor-made for you. <br></h5>
+                
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <h4>Preview </h4>  
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <h5><ul>
+                    <li>The application has a preset demo database of bus stops,
+                        which covers addresses in two cities</li>
+                    <li>You can use the demo customer account - username: <span class ='bg_g'>customer</span> , 
+                        password:  <span class ='bg_g'> demo_client1 </span> -
+                        and partially familiarize yourself with the client functionality
+                    </li>
+                    <li>You can also use the account of an agency employee -  username: <span class ='bg_g'> staff </span> ,
+                         password: <span class ='bg_g'> demo_staff1</span>- for
+                        partial familiarization with the staff app part.</li>
+                </ul></h5>                    
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <h4>Detailed exploration</h4>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">                   
+                <ul>
+
+                    <li><h4><strong>Customizable Time Simulation Environment</strong></h4>
+                        <h5>Your can adjust the app "today's date" and  see 
+                            how the app manifests itself at different stages of the customer's order.
+                        </h5>
+
+                        <h5> A specific 
+                        <a href="{% url 'register_app_explorer' %}"> "Explorer Account" </a> 
+                        is required  (valid for <strong>{{lifetime }}</strong> days).
+                        Every "Explorer Account" opens its own Environment.</h5>
+                        <h6><i>Please note that it is your own real-world account. Do not confuse it with 
+                        preset <span class ='bg_g'> staff </span> or <span class ='bg_g'> customer </span> 
+                        as well as other "inner"  accounts that you create within the app.</i></h6>
+                    </li> 
+
+                    <li>
+                        <h4><strong>Customer Dedicated Functionality:</strong></h4>
+                        <h6><i>your may use the preset account username: <span class ='bg_g'> customer </span> , 
+                            password: <span class ='bg_g'> demo_client1 </span> as well as create some new ones</i></h6> 
+                        <ul><h5>
+                            <li>view the list of stops</li>
+                            <li>book stops and cancel bookings</li>
+                            <li>place orders</li>
+                            <li>view customer orders on the personal customer's account page</li>
+                        </h5></ul>
+                    </li>
+                    <li>
+                        <h4><strong>Staff Functionality:</strong> </h4>
+                        <h6><i> agency employee  username: <span class ='bg_g'> staff </span> ,
+                         password: <span class ='bg_g'> demo_staff1</span></i></h6>         
+                         <ul><h5>
+                            <li>track offline customer payments</li>
+                            <li>control the hanging and removal of ad at bus stops</li>
+                            <li>cancel any order</li>
+                            <li>change agency business parameters - like discounts and others </li>
+                            <li>view agency performance analytics</li>
+                        </h5></ul>
+                    </li>                                                        
+                </ul>           
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.collapse').collapse() 
+</script>
+        
+{% endblock %}

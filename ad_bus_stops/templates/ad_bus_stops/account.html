@@ -1,0 +1,59 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container">
+
+    <div class="row">
+        <div class ='col width_100 adjust'>
+            <h3>Your Account </h3>
+        </div>
+        <div class ='col'>
+            <div class ='width_100 adjust'>
+                <h5><i>username: </i>{{customer_name}}</h5>
+            </div>
+            <div class ='width_100 adjust'>
+                <h5><i>email: </i> {{customer_email}}</h5>
+            </div>
+        </div>
+    </div>  <hr> 
+    
+    {% if current_ords %}
+        <h5 class ='width_100 adjust'> Current orders </h5> 
+        <ol>
+        {% for order in current_ords %}
+
+            <a href = "{% url 'order_page' order.0 'show' %}" class = 'no_underline'>
+                <li><div class ='row'>
+                    <h6 class ='col-4 adjust'> Order №{{order.0}}</h6>
+                    <h6 class ='col-4 adjust'> {{order.1}} - {{order.2}}</h6>
+                    <h6 class ='col-4 adjust'> {{order.3}}&nbsp;$ </h6>
+                </div></li>
+            </a>
+        {% endfor %}
+        </ol> <hr>
+    {% endif %} 
+    {% if archived_ords %}
+        <h5 class ='width_100 adjust'> Archived orders </h5> 
+        <ol>
+        {% for order in archived_ords %}
+            <a href = "{% url 'order_page' order.0 'show' %}" class = 'no_underline'>
+                <li><div class ='row'>
+                    <h6 class ='col-4 adjust'> Order №{{order.0}}</h6>
+                    <h6 class ='col-4 adjust'> {{order.1}} - {{order.2}}</h6>
+                    <h6 class ='col-4 adjust'> {{order.3}}&nbsp;$ </h6>
+                </div></li>
+            </a>
+        {% endfor %}
+        </ol> <hr>
+    {% endif %} 
+    {% if no_orders %}
+      <br><br><h5 class ='width_100 adjust'> No orders </h5>
+    {% endif %}
+
+    
+
+    
+</div>      
+
+{% endblock %}

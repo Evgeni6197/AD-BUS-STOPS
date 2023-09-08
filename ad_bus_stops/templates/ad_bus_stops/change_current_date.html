@@ -1,0 +1,60 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container">   
+  <br><br>
+  <div>
+      <h3> Simulate another current date </h3> 
+  </div><br>
+  {% if message %}
+    <div class = 'warning_message'>{{ message }}</div> <br>
+  {% endif %}
+
+  <form action = '{% url "change_current_date" %}' method = 'post'>
+      {% csrf_token %}
+
+      <div class="row width_100" >
+          <div class="col-8">
+            <div class="form-group">
+              <input class='form-control' type="date" name="current_date">
+            </div>
+          </div>
+          <div class="col-4">
+            <input class="btn btn-primary" type="submit" value="Choose">
+          </div>
+      </div>       
+  </form><br><br>
+
+  {% if db_preset_message == 'Installation process restriction: Superuser access required' %}
+    <h5 class = 'adjust width_100' style = 'color:red'>{{db_preset_message}}</h5>
+  {% endif %}
+  {% if  app_explorer_username == superuser_name %}
+
+    {% if db_preset_message %}
+      {% if db_preset_message == 'Bus stops successfully set to db' %}
+        <h5 class = 'adjust width_100' style = 'color:chartreuse'>{{db_preset_message}}</h5>
+      {% else %}
+        <h5 class = 'adjust width_100' style = 'color:red'>{{db_preset_message}}</h5>
+      {% endif %}  
+    {% else %}
+      <a href = "{% url  'preset_db'  %}" onclick="spin(event)" ><h5 class = 'adjust width_100 invisible'>Preset db</h5></a>
+    {% endif %}
+  {% endif %}
+  <div id ='animation_container' class = 'invisible  adjust width_100'>
+    <br><br><br>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only"></span>
+        </div>
+    </div>
+  </div>
+</div> 
+<script>
+  function spin(event){
+    event.target.classList.add('invisible');
+    document.getElementById('animation_container').classList.remove('invisible')      
+  }
+</script>  
+
+{% endblock %}

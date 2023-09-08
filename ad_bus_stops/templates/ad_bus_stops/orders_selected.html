@@ -1,0 +1,41 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container">
+
+    <h3 class = 'width_100 adjust'>Orders Selected
+        {% if  total %}
+            : Total {{total}}&nbsp;$ 
+        {% endif %}
+    </h3> <hr>
+    {% for order in orders %} 
+        <a href = "{% url 'order_page' order.1  'show' %}" class ='no_underline'>
+            <div class ='row'>
+                <div class ='col-2 adjust_left'>
+                    <h5>{{order.0}}. Order №{{order.1}} </h5>
+                </div>
+                <div class ='col-2 '>
+                    <i> Customer:  </i> <h5>{{order.2}} </h5>
+                </div>
+                <div class ='col-2 '>
+                    <i> Created:  </i><h5>{{order.3}}</h5>
+                </div>
+                <div class ='col-3'>
+                    <i> Exposition:  </i><h5>{{order.4}} - {{order.5}}</h5>
+                </div>
+                <div class ='col-2 adjust'>
+                    <i> Status: {{order.6}} </i><h5></h5>
+                </div>
+                <div class ='col-1 adjust'>
+                    <h5>{{order.7}}&nbsp;$ </h5>
+                </div>
+            </div></a>
+            <hr>
+    {% empty %}
+        <br><br><br>
+        <h5 class = 'width_100 adjust'>No orders found</h5> 
+    {% endfor %}
+</div>      
+
+{% endblock %}

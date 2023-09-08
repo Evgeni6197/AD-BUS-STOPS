@@ -1,0 +1,141 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container">
+    <form action = '{% url  "edit_setUp" %}' method = 'post'>
+        {% csrf_token %}
+        <div class = 'row'>
+            <div class ='col-2 '></div>        
+            <div class ='col-8 adjust'>
+                <h3> Edit setUp Parameters</h3>
+            </div>
+            <div class ='col-2 adjust'>
+                <button type = 'submit' class="btn btn-outline-primary">Submit</button>
+            </div>
+        </div> <hr>
+        <div class ='row'>        
+            <div class ='col-3 adjust_right'>
+                <h5> Payment waiting  </h5>
+            </div>
+            <div class ='col-1 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="number" name="payment_waiting" 
+                            value = '{{payment_waiting}}' min = '1'>
+                </div>
+            </div>
+            <div class ='col-2 adjust_left'>
+                <h5> days </h5>
+            </div>
+            <div class ='col-3 adjust_right'>
+                <h5> Preparation  </h5>
+            </div>
+            <div class ='col-1 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="number" name="preparation" 
+                            value = '{{preparation}}' min = '1'>
+                </div>
+            </div>
+            <div class ='col-2 adjust_left'>
+                <h5> days </h5>
+            </div>
+        </div> <hr>
+        <div class ='row'>        
+            <div class ='col-3 adjust_right'>
+                <h5> Duration 1  </h5>
+            </div>
+            <div class ='col-1 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="number" name="duration1" 
+                            value = '{{duration1}}' min = '2'>
+                </div>
+            </div>
+            <div class ='col-3 adjust_left'>
+                <h5> months </h5>
+            </div>
+            <div class ='col-2 adjust_right'>
+                <h5> Discount 1  </h5>
+            </div>
+            <div class ='col-1 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="number" name="discount1" 
+                            value = '{{discount1}}' min = '0'>
+                </div>
+            </div>
+            <div class ='col-2 adjust_left'>
+                <h5> % </h5>
+            </div>
+        </div> <hr>
+        <div class ='row'>        
+            <div class ='col-3 adjust_right'>
+                <h5> Duration 2  </h5>
+            </div>
+            <div class ='col-1 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="number" name="duration2" 
+                            value = '{{duration2}}' min = '3'>
+                </div>
+            </div>
+            <div class ='col-3 adjust_left'>
+                <h5> months </h5><h6>&nbsp;&nbsp; ( > Duration 1) </h6> 
+            </div>
+            <div class ='col-2 adjust_right'>
+                <h5> Discount2 </h5>
+            </div>
+            <div class ='col-1 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="number" name="discount2" 
+                            value = '{{discount2}}' min = '0'>
+                </div>
+            </div>
+            <div class ='col-2 adjust_left'>
+                <h5> % </h5>
+            </div>
+        </div> <hr>
+        <div class ='row'>        
+            <div class ='col-3 adjust_right'>
+                <h5> Duration 3 </h5>
+            </div>
+            <div class ='col-1 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="number" name="duration3" 
+                            value = '{{duration3}}' min = '4'>
+                </div>
+            </div>
+            <div class ='col-3 adjust_left'>
+                <h5> months </h5><h6>&nbsp;&nbsp; ( > Duration 2) </h6> 
+            </div>
+            <div class ='col-2 adjust_right'>
+                <h5> Discount 3 </h5>
+            </div>
+            <div class ='col-1 adjust_left'>
+                <div class="form-group">
+                    <input class='form-control' type="number" name="discount3" 
+                            value = '{{discount3}}' min = '0'>
+                </div>
+            </div>
+            <div class ='col-2 adjust_left'>
+                <h5> % </h5>
+            </div>
+        </div> <hr>
+        <div class ='row'> 
+            <div class ='col-3  adjust warning_message'>
+                <h5>{{message}}</h5>
+            </div>       
+            <div class ='col-4 adjust_right'>
+                <h5> Orders are received till </h5>
+            </div>
+            <div class ='col-2 adjust_right'>
+                <div class="form-group">
+                    <input class='form-control' type="number" name="year" 
+                            value = '{{year}}' min = '2024' max ='2030'>
+                </div>
+            </div>
+            <div class ='col-3 adjust_left'>
+                <h5> year </h5> <h6> &nbsp;&nbsp;( 2024 - 2030 )</h6>
+            </div>                        
+        </div><hr>
+    </form>
+</div>      
+
+{% endblock %}

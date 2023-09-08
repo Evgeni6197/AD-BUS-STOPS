@@ -1,0 +1,39 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container">
+    <h3>Register an Explorer Account </h3>
+
+    {% if message %}
+        <div class = 'warning_message'>
+            {{ message }} <br><br>
+            {% if message == "Password validation failed" %}
+                {% for warning in password_validation_failure_list %}
+                    <ul>
+                        <li>{{warning}}</li>
+                    </ul>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <form action="{% url 'register_app_explorer' %}" method="post" >
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" autofocus type="text" name="username" placeholder="Username - not more then 10 symbols" required maxlength="10">
+            <br>
+        </div>
+        <div class="form-group">
+            <input  class="form-control" type="password" name="password" placeholder="Password - not more then 20 symbols" required maxlength="20">
+            <br>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password" required maxlength="20">
+            <br>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Register" id="register_button">
+    </form>
+</div>  
+    
+{% endblock %}

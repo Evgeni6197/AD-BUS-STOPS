@@ -1,0 +1,83 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="general_body_container " style = "width: 99%; ">
+    {%  if message == 'reload' %}
+        <div class = 'adjust' style = 'padding: 30px;'>
+            <br><br><br> <h5>Server Error. Please reload the page</h5>
+        </div>
+    {% endif %}
+    <div class = 'general_stops_container invisible'  id = 'content_container' data-message = '{{message}}'>        
+        <div id = 'success_mess_cont' class = 'invisible stops_page_message_container set_border  bg_suc'>
+            <div id ='spinner_container' class = ' adjust width_100'>
+                <br><br>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                    <span class="sr-only"></span>
+                    </div>
+                </div>
+                <br><br><br>
+            </div>
+        </div>          
+        <div class = 'row flex_0 top_stops_container '>
+            <div class ='col-7 adjust'>
+                <h3>Cart</h3>
+            </div>
+            <div class ='col-5'>
+                <h5> Total: {{total}}&nbsp;S</h5>
+            </div>
+        </div>
+        <div class = 'row flex_0 top_stops_container '>
+            <div class ='col-7 adjust'>
+                <div>                    
+                    <h6><i>Exposition</i>  {{exposition_starts}}&nbsp;- &nbsp;{{exposition_ends}}</h6>
+                    <h6> <i>Payment deadline</i> {{deadline}}</h6>                    
+                </div>
+            </div>
+            <div class = 'col-5 nav'>
+                <div class ='nav-link'>
+                    <button  id = 'back_btn' type="button" class="btn btn-outline-primary " >Back</button> 
+                </div>
+                <div class ='nav-link'>
+                    <form action = '{% url "checkout" city  num_page letters   %}' method = 'post' id = 'checkout_form'>
+                        {% csrf_token%}
+                        <input type="hidden" name ='order_to_checkout' value = "{{opened_order_id}}">
+                        <input type="hidden" name ='deadline' value = "{{deadline}}">
+                        <input type="hidden" name ='total' value = "{{total}}">
+                        <button  type="submit" class="btn btn-outline-primary " id = 'checkout_btn'>Checkout</button> 
+                    </form>
+                </div>                
+            </div>
+        </div> <hr>
+        <div  style = 'flex: 1 1 auto; ' >
+
+            {% for stop in stops_booked_enumerated %}                    
+                <div class = 'row  stop_container align-items-center ' >
+                    <div class = 'col-6 '>
+                        {{stop.0}}
+                    </div>
+                    <div class = 'col-2'>
+                        {{stop.1}}&nbsp;$
+                    </div>
+                    <div class = 'col-4  '>
+                        <form action = '{% url "cart" city  num_page letters %}' method = 'post' class ='cancel_form' >
+                            {% csrf_token%}
+                            <input type="hidden" name ='reference' value = '{{stop.2}}'>
+                            <button  type="submit" class="btn btn-outline-primary  cancel_btn"  >Cancel</button> 
+                        </form>
+                    </div>
+                </div>                                   
+            {% empty %}
+                <div class = "adjust">
+                    <br><br><br><h5>No bus-stops booked </h5>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class = "invisible">
+        <a href = '{% url "bus_stops"  city  num_page letters %}'  id = 'back_link'></a>
+    </div>    
+</div>
+<script src="{% static 'ad_bus_stops/cart.js' %}"></script> 
+{% endblock %}

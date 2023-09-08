@@ -1,0 +1,183 @@
+{% extends "ad_bus_stops/layout.html" %}
+{% load static %}
+ 
+{% block body %}
+    
+    <div class="row " style ='height: 100%; width:100%' id="dashboard_general_container" >
+        <div class = 'col-4  bg_nav_blue  overflow_h invisible1' id="dashboard_navbar_container" ><br>            
+            <nav class="nav flex-column overflow_h width_100">                  
+                <a class="nav-link" href="{% url 'order_query' %}">Orders Analytics</a>
+                <a class="nav-link" href="{% url 'edit_setUp' %}">Edit Business Settings</a> 
+                <a class="nav-link" href="#" id = 'cancel_order_link'>Cancel an Order</a>
+            </nav>  
+            <div class ='invisible' id= 'form_container' style ='padding: 10px;'>
+                <form action = '{% url "prepare_cancel" %}' method = 'post'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class='form-control' type="number" name="order_id" placeholder = '№'>                        
+                    </div><br>
+                    <button type = 'submit' class="btn btn-secondary" id = 'form_sbm_btn'>Submit</button>
+                </form> 
+            </div>          
+        </div>
+        <div class = 'col-8' id ='dashboard_content_container' data-part = "{{dashboard_part}}">
+            
+            {% if dashboard_part == 'front' %}
+                <br><h3 class = 'width_100 adjust'>Dashboard</h3> 
+                {% if message == 'app_explorer_required' %}
+                    <h5 class = 'width_100 adjust dash_mess' >
+                        <br><br>ACCESS DENIED:                         
+                        In  order to access any dashboard action, an Explorer 
+                        account is required. Click on the logo to register.</h5>
+                {% else %}
+                    {% if not content %}
+                    <h5 class = 'width_100 adjust dash_mess' >
+                        <br><br>No events scheduled for today</h5>
+                    {% else %}
+                        <ul>
+                            {% if content.0 %}
+                                <li><a href = '{% url  "payment_verification" %}' class ='no_underline' >
+                                    <div  class ='row '> 
+                                        <div class ='col-10  vertically_centered'>
+                                            Verify the receipt of offline payments. Currently pending orders: 
+                                        </div> 
+                                        <div class = 'col-2 adjust ' >
+                                            <div class =' set_border adjust dash_num' >
+                                                <h5 > &nbsp;&nbsp;{{content.0 }}&nbsp;&nbsp;</h5>
+                                            </div>                            
+                                        </div>
+                                    </div>
+                                </a></li>
+                            {% endif %}
+                            {% if content.1 %}
+                                <li><a href = '{% url "placement_verification" %}' class ='no_underline' >
+                                    <div  class ='row'> 
+                                        <div class ='col-10  vertically_centered'>
+                                            Verify the actual ad placement. Orders awaiting: 
+                                        </div> 
+                                        <div class = 'col-2 adjust' >
+                                            <div class =' set_border adjust dash_num' >
+                                                <h5 > &nbsp;&nbsp;{{content.1 }}&nbsp;&nbsp;</h5>
+                                            </div>                            
+                                        </div>
+                                    </div>
+                                </a></li>
+                            {% endif %}
+                            {% if content.2 %}
+                                <li><a href = '{% url "removal_verification" %}' class ='no_underline' >
+                                    <div  class ='row'> 
+                                        <div class ='col-10  vertically_centered'>
+                                            Verify the actual ad removal. Orders awaiting: 
+                                        </div> 
+                                        <div class = 'col-2 adjust' >
+                                            <div class =' set_border adjust dash_num' >
+                                                <h5 > &nbsp;&nbsp;{{content.2 }}&nbsp;&nbsp;</h5>
+                                            </div>                            
+                                        </div>
+                                    </div>
+                                </a></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                {% endif %} 
+            {% elif  dashboard_part == 'payment_verification' %}
+                <br><h3 class = 'width_100 adjust'>Payment Verification</h3>
+                <i class = 'width_100 adjust'> Dates denote orders creation. </i><br>
+                {% for order in orders %}
+                        <div class = "row stop_container  align-items-center">
+                            <div class = 'col-8'>
+                                <a href = '{% url  "order_page" order.1  "show" %}' class ='no_underline' >
+                                    <h5>{{order.0|safe}}</h5>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <button  type="button" class="btn btn-outline-primary payment_ver_btn"
+                                        data-order_id = "{{order.1}}"
+                                        data-order_sum = "{{order.2}}"> Payment received</button> 
+                            </div>
+                        </div>
+                {% empty %}
+                    <h5 class = 'width_100 adjust dash_mess' >
+                        <br>No pending orders</h5>
+                {% endfor %}
+
+                            
+            {% elif  dashboard_part == 'placement_verification' %}
+                <br><h3 class = 'width_100 adjust'>Actual Ad Placement Verification</h3>
+                    <i class = 'width_100 adjust'> Dates indicate exposition start. </i><br>
+                {% for order in orders %}
+                <div class = "row stop_container  align-items-center">
+                    <div class = 'col-6'>
+                        <a href = '{% url  "order_page" order.0  "show" %}' class ='no_underline' >
+                            <h5>Order&nbsp;№{{order.0}}&nbsp; &nbsp;{{order.1}} </h5>
+                        </a>
+                    </div>
+                    <div class="col-6 ">
+                        <form action = '{% url  "placement_verification" %}' method = 'post'>
+                            {% csrf_token %}
+                            <input type ='hidden' name = 'order_id' value="{{order.0}} "> 
+                            <button  type="submit" class="btn btn-outline-primary place_remove_ver_btn">
+                                    I confirm actual ad display </button>                               
+                        </form>
+                    </div>
+                </div>
+                {% empty %}
+                    <h5 class = 'width_100 adjust dash_mess' >
+                        <br>No orders to verify</h5>
+                {% endfor %}
+
+            {% elif  dashboard_part == 'removal_verification' %}
+                <br><h3 class = 'width_100 adjust'>Actual Ad  Removal Verification</h3>    
+                    <i class = 'width_100 adjust'> Dates indicate exposition end. </i><br>
+
+                {% for order in orders %}
+                <div class = "row stop_container  align-items-center">
+                    <div class = 'col-6'>
+                        <a href = '{% url  "order_page" order.0  "show" %}' class ='no_underline' >
+                            <h5>Order&nbsp;№{{order.0}}&nbsp; &nbsp;{{order.1}} </h5>
+                        </a>
+                    </div>
+                    <div class="col-6 ">
+                        <form action = '{% url  "removal_verification" %}' method = 'post'>
+                            {% csrf_token %}
+                            <input type ='hidden' name = 'order_id' value="{{order.0}} "> 
+                            <button  type="submit" class="btn btn-outline-primary place_remove_ver_btn">
+                                    I confirm actual ad removal </button>                               
+                        </form>
+                    </div>
+                </div>
+                {% empty %}
+                    <h5 class = 'width_100 adjust dash_mess' >
+                        <br>No orders to remove</h5>
+                {% endfor %}  
+            {% endif %}            
+        </div>
+    </div>
+
+    <div id="payment_ver_container" class = 'stops_page_message_container invisible bg_suc set_border  '>
+        <h5 class ="horizontally_centered width_100">Confirm payment reception</h5>
+        <h5 class ="horizontally_centered width_100">
+            Order&nbsp;№ <span id="show_order_id"></span> &nbsp;&nbsp; &nbsp;&nbsp;
+            <span id="show_order_sum"></span>&nbsp;$ </h5>
+        <div class = "horizontally_centered width_100 ">
+            <button  type="button" class="btn btn-secondary" id="payment_back_btn"> Back </button> 
+            &nbsp;&nbsp; &nbsp;&nbsp;
+            <button  type="button" class="btn btn-primary" id="payment_submit_btn"> Payment received</button> 
+            <form action = '{% url  "payment_verification" %}' method = 'post' id = 'form'>
+                {% csrf_token %}
+                <input type ='hidden' name = 'order_id' id = 'form_input_order_id' > 
+                <input type ='hidden' name = 'order_sum' id = 'form_input_order_sum' >                    
+            </form>
+        </div>
+    </div>
+    <div id ='spinner_container'  class = 'stops_page_message_container invisible bg_suc set_border  ' >  
+        <div  class = ' adjust width_100 '>           
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                <span class="sr-only"></span>
+                </div>
+            </div><br><br>            
+        </div>
+    </div>
+    <script src="{% static 'ad_bus_stops/dashboard.js' %}"></script>
+{% endblock %} 
