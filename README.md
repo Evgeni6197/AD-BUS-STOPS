@@ -33,7 +33,7 @@
    ```
    git clone https://github.com/Evgeni6197/AD-BUS-STOPS.git
    cd AD-BUS-STOPS
-   python -m venv ./venv
+   python3 -m venv ./venv
    source venv/bin/activate
    python -m pip install -r requirements.txt
    python manage.py migrate
