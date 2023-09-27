@@ -2,10 +2,9 @@
 
  ### 1.  [Advertisement video 1 min]( https://youtu.be/Gvx-QFM5nvM ) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  [Detailed video 5 min ](https://youtu.be/86AK-NFmDu4 )
 
- ### 2. Distinctiveness and Complexity
+ ### 2. Summary
 
-   - It is a complete business project that could be used in real life. The essence of the project  
-    is to present properly a commercial proposal  B2B. There are two parts elaborated:
+   - The essence of the project is to present properly a commercial proposal  B2B. There are two parts elaborated:
      - A product itself:
        - a website for customers of an advertising agency selling ad space on bus stops
        - a business tool for agency staff to track the inner workflow
