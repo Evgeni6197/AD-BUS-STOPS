@@ -11,7 +11,7 @@
      - A way of presentation: a special environment for product examination by a representative
         of an agency 
    - The project incorporates the email correspondence between the agency and its customers
-  - The project [is hosted on HEROKU](https://ad-bus-stops-677421a1e6cb.herokuapp.com)      
+  - The project [is hosted on HEROKU](https://ad-bus-stops-2g-f076c6c0d0c8.herokuapp.com)      
     - To make the project familiarization straightforward, the version committed here explicitly  
       contains SECRET_KEY and EMAIL_HOST_PASSWORD in settings.py, while in the Heroku version, 
       these parameters are assigned to the environmental variables and are not accessible publicly
