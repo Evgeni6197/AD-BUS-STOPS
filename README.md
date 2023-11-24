@@ -16,10 +16,9 @@
       contains SECRET_KEY and EMAIL_HOST_PASSWORD in settings.py, while in the Heroku version, 
       these parameters are assigned to the environmental variables and are not accessible publicly
     - The EMAIL_HOST_USER  parameter also differs in the Heroku version.
-    - The minimal Heroku tariff used now sometimes leads to
-       a lack of resources (db connections) and  *Server&nbsp;Error* message. Just refresh the page
     - For the sake of simplicity,  as it is described in the project launch section, the application can be run locally
-      using 'python manage.py runserver,' which is suitable for local testing. On Heroku, the application
+      using
+      ```python manage.py runserver```, which is suitable for local testing. On Heroku, the application
        is deployed using the Gunicorn server.
   - The front page and the index page are decorated by animation that not only serves as an ornament  
     but also introduces a business context. 
